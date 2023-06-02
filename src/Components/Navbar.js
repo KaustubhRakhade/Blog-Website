@@ -10,7 +10,8 @@ export default function Navbar({ children }) {
     navigate("/signin");
   }
   return (
-    <div id="navbar">
+    <>
+        <div id="navbar">
         <div id="logobox">
             <img src={logo} alt="CGS" id="logo" />
             <h1>readme</h1>
@@ -23,9 +24,12 @@ export default function Navbar({ children }) {
                 <span id="profileImage">{(localStorage.loggedIn || "Google User")[0]}</span>
                 <span id="profileData">Signed in as<br /> <i>{localStorage.loggedIn || "Google User"}</i></span>
             </div>
-            <input id="signoutBTN-mob" className="material-symbols-outlined" type="button" value="logout" onClick={signOut}/>
+            <input id="signoutBTN-mob" title="Sign Out" className="material-symbols-outlined" type="button" value="logout" onClick={signOut}/>
             <input id="signoutBTN-pc" type="button" value="Sign out" onClick={signOut}/>
         </div>
     </div>
+    <div id="navbar-space"></div>
+    </>
+
   )
 }

@@ -1,9 +1,16 @@
+import { useState } from "react";
 import Chip from "./Chip";
 
-export default function BlogItem({blog, deleteBlog, handleSearch}) {
+export default function BlogItem({blog, deleteBlog, handleSearch, editBlog}) {
+
+  const [active, setActive] = useState(false)
 
     const handleDelete = () => {
         deleteBlog(blog.time);
+    }
+
+    const handleEdit = () => {
+        editBlog(blog);
     }
 
     let timeGap = Date.now() - blog.time;
@@ -48,18 +55,23 @@ export default function BlogItem({blog, deleteBlog, handleSearch}) {
     }
  
   return (
-    <div className="blogitem">
+    <div className={"blogitem" + (active ? " active" : "")} onClick={() => { setActive(!active) }}>
         <span className="blogtitle">{blog.title}</span>
         <span className="blogmeta">{blog.author} • {descTimeGap}</span>
         <span className="blogcontent">{blog.content}</span>
-        <div className="blogtags">{
-            blog.tags.map((tag) => {
-                return (
-                    <Chip handleTagClick={handleSearch} key={tag} text={tag} active={false}/>
-                );
-            })};
-            <input title="Delete" className="deleteBlog material-symbols-outlined" type="button" value="delete" onClick={() => handleDelete() }/>
+        <div className="blogitem-bottom">
+            <div className="blogtags">{
+                blog.tags.map((tag) => {
+                    return (
+                        <Chip handleTagClick={handleSearch} key={tag} text={tag} active={false}/>
+                    );
+                })}
+            </div>
+            <input title="Edit" className="editBlog material-symbols-outlined" type="button" value="edit" onClick={handleEdit}/>
+            <input title="Delete" className="deleteBlog material-symbols-outlined" type="button" value="delete" onClick={handleDelete}/>
+
         </div>
+
     </div>
     )
 }

@@ -9,6 +9,19 @@
     --tooltipbg: rgb(33, 25, 24);
   }
 
+  /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    appearance: textfield;
+  -moz-appearance: textfield;
+}
+
 @keyframes popup {
     from {
         transform: scale(0.95);
@@ -72,14 +85,24 @@
     border-bottom-width: 0.2rem;
     outline: none;
     /* border-radius: 2rem; */
-  transition: all 1s;
+  transition: all 0.5s;
   font-family: "Space Grotesk", sans-serif;
+  opacity: 0.7;
+}
+
+#signbox input[type=text]:focus,
+#signbox input[type=email]:focus,
+#signbox input[type=number]:focus,
+#signbox input[type=password]:focus {
+    opacity: 1;
+    filter: brightness(1.2);
 }
 
 #signbox input[type=text].error,
 #signbox input[type=email].error,
 #signbox input[type=number].error,
 #signbox input[type=password].error {
+    opacity: 1;
     color: #ff5656;
     border-color: #ff5656;
     background-color: #ff565615;
@@ -87,7 +110,7 @@
 }
 
 #signbox input::placeholder {
-    transition: all 1s;
+    transition: all 0.5s;
     user-select: none;
 }
 
@@ -112,16 +135,37 @@
 }
 
 #signbox label {
+    font-size: 1.1rem;
     color: var(--text2);
-    line-height: 1.2rem;
+    line-height: 1.5rem;
     user-select: none;
 }
 
 #signbox input[type=checkbox] {
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.25rem;
+    width: 1.25rem;
     padding: 0;
-    margin: 0 0.5rem;
+    margin: 0;
+    position: absolute;
+    opacity: 0;
+}
+
+#checkmark {
+    display: block;
+    background: var(--btn2bg);
+    color: transparent;
+    border-radius: 0.25rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+#signbox input[type=checkbox]:checked + #checkmark {
+    background: var(--btn1bg);
+    color: var(--btn1text);
 }
 
 #signbox input[type=button] {
@@ -143,3 +187,75 @@
     color: var(--text2);
     cursor: not-allowed;
   }
+
+
+@keyframes fade-alert {
+    0% {
+        opacity: 0;
+        bottom: -4rem;
+        transform: scale(0.85);
+    }
+    15% {
+        opacity: 1;
+        bottom: 2rem;
+        transform: scale(1);
+    }
+    85% {
+        opacity: 1;
+        bottom: 2rem;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        bottom: -4rem;
+        transform: scale(0.85);
+    }
+}
+
+@keyframes fade-alert-progress {
+    0% {
+        background-position: 100%;
+    }
+    10% {
+        background-position: 100%;
+    }
+    90% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 0%;
+    }
+}
+
+.fading-alert {
+    position: fixed;
+    bottom: -4rem;
+    border-radius: 1rem;
+    background-color: var(--tooltipbg);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+    animation: fade-alert 4s forwards;
+    box-shadow: 0 0 5rem var(--tooltipbg);
+}
+
+.fading-alert span {
+    padding: 1rem;
+    color: var(--text2);
+}
+
+.fading-alert span.material-symbols-outlined {
+    padding-right: 0;
+}
+
+.fading-alert-timeout {
+    width: 100%;
+    height: 0.25rem;
+    background: linear-gradient(90deg, var(--btn2bg) 0%, var(--btn1bg) 50%, var(--btn2bg) 50%, var(--btn2bg) 100%);
+    background-size: 200%;
+    background-position: 100%;
+    animation: fade-alert-progress 4s forwards;
+
+}

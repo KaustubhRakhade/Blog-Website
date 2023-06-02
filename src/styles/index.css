@@ -9,6 +9,7 @@
   --btn2bg: rgb(77, 69, 67);
   --btn2text: rgb(253, 253, 253);
   --tooltipbg: rgb(33, 25, 24);
+  --accent: #ffb084;
 }
 
 body {
@@ -16,6 +17,12 @@ body {
   background-color: var(--bgcolor);
   font-family: "Space Grotesk", sans-serif;
   scroll-behavior: smooth;
+  user-select: none;
+}
+
+#navbar-space {
+  width: 100%;
+  height: 4.2rem;
 }
 
 #navbar {
@@ -28,9 +35,11 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   border: solid var(--btn2bg);
-  background-color: var(--bgcolor);
+  background-color: rgba(var(--bgcolor), 0.7);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border-width: 0 0 0.2rem 0;
   box-shadow: 0 0 1rem 1rem var(--bgcolor);
 }
@@ -40,8 +49,8 @@ body {
   flex-direction: row;
   color: var(--text1);
   align-items: center;
-  user-select: none;
   margin-left: 0.5rem;
+  margin-right: auto;
 }
 
 @keyframes text-bg {
@@ -61,7 +70,7 @@ body {
   /* font-family: "Gideon Roman"; */
   margin-left: 0.75rem;
   /* background: linear-gradient(120deg, var(--btn1bg),#ffb084); */
-  background: linear-gradient(120deg, var(--btn1bg), #ffb084, var(--btn1bg));
+  background: linear-gradient(120deg, var(--btn1bg), var(--accent), var(--btn1bg));
   background-size: 200% 200% ;
   background-repeat:repeat;
   background-clip: text;
@@ -85,6 +94,7 @@ body {
   padding: 0 0 0 1rem;
   color: var(--text1);
   transition: all 0.25s;
+  margin: 0 1rem;
 }
 
 #searchINP {
@@ -94,7 +104,7 @@ body {
   color: var(--text1);
   font-size: 1rem;
   margin: 0 0.75rem;
-  width: 3.5rem;
+  width: 4rem;
   font-family: "Space Grotesk", sans-serif;
   transition: all 0.25s;
   padding: 0;
@@ -133,7 +143,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  cursor: pointer;
+  margin-left: auto;
 }
 
 #profile {
@@ -208,14 +218,58 @@ body {
 #searchcount {
   display: block;
   text-align: center;
-  margin: 6rem auto 2rem auto;
+  margin: 2rem auto;
   color: var(--text1);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#emplyblogs {
+  display: none;
+  text-align: center;
+  margin: calc(50vh - 3.5rem) auto 0 auto;
+  color: var(--text2);
+  animation: fade-in 1s forwards;
+}
+
+#emplyblogs .material-symbols-outlined {
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0 0.2rem;
+  transform: translateY(0.2rem);
+}
+
+.FAB {
+  position: fixed;
+  display: none;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  border-radius: 1rem;
+  background: var(--btn1bg);
+  color: var(--btn1text);
+  font-weight: bold;
+  font-size: 1.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
+  line-height: 3rem;
+  text-align: center;
+  border: none;
+  box-shadow: 0.125rem 0.125rem 0.25rem var(--tooltipbg);
+  padding: 0;
+  z-index: 100;
 }
 
 #newblog {
   display: flex;
   max-width: 40rem;
-  margin: 6rem auto 2rem auto;
+  margin: 2rem auto;
   flex-direction: column;
   padding: 1rem 1rem;
   border: solid 0.1rem var(--btn2bg);
@@ -226,7 +280,7 @@ body {
 
 #newblog.off {
   max-width: 20rem;
-  margin: 7rem auto 3rem auto;
+  margin: 3rem auto;
 }
 
 #newblog * {
@@ -305,7 +359,8 @@ body {
 #newtags {
   display: flex;
   flex-direction: row;
-  column-gap: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 #addtag {
@@ -319,7 +374,6 @@ body {
   height: min-content;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
-  user-select: none;
 }
 
 #newtags.error #addtag {
@@ -359,7 +413,7 @@ body {
   max-width: 40rem;
   margin: 1rem auto;
   flex-direction: column;
-  padding: 1rem 1rem;
+  padding: 1rem;
   border: solid 0.1rem var(--btn2bg);
   border-radius: 1rem;
 }
@@ -371,6 +425,7 @@ body {
   font-weight: bold;
   margin-bottom: 1rem;
   font-family: "Space Grotesk", sans-serif;
+  word-break: break-word;
 }
 
 .blogcontent {
@@ -378,7 +433,13 @@ body {
   font-size: 1rem;
   font-family: "Space Grotesk", sans-serif;
   margin-bottom: 1rem;
-  white-space: pre-wrap;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blogitem.active .blogcontent{
+  white-space:pre-wrap;
 }
 
 .blogmeta {
@@ -388,10 +449,30 @@ body {
   font-family: "Space Grotesk", sans-serif;
 }
 
+.blogitem-bottom {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 .blogtags {
+  padding-right: 1rem;
   display: flex;
   flex-direction: row;
   column-gap: 1rem;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.blogtags::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.blogtags {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .deleteBlog {
@@ -401,6 +482,27 @@ body {
   color: var(--text2);
   margin-left: auto;
   transition: all 0.2s;
+  padding-left: 0.5rem;
+  /* box-shadow: -1.5rem 0 0.75rem 0.75rem red; */
+  /* box-shadow: -0.5rem 0 0.25rem 0.25rem var(--bgcolor); */
+}
+
+.editBlog {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text2);
+  margin-left: auto;
+  transition: all 0.2s;
+  padding-left: 0.5rem;
+  /* box-shadow: -1.5rem 0 0.75rem 0.75rem red; */
+  box-shadow: -0.5rem 0 0.25rem 0.25rem var(--bgcolor);
+}
+
+.editBlog:hover {
+  color: var(--btn1bg);
+  text-shadow: 0 0 0.75rem var(--accent);
+  transform: scale(1.1);
 }
 
 .deleteBlog:hover {
@@ -419,8 +521,8 @@ body {
   color: var(--text1);
   font-size: 0.9rem;
   line-height: 1.25rem;
-  user-select: none;
   cursor: pointer;
+  /* z-index: -1; */
 }
 
 .chip span {
@@ -523,7 +625,18 @@ body {
   padding: 1rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 710px) {
+  .blogitem {
+    width: calc(100% - 4rem);
+    margin: 1rem;
+  }
+  #newblog {
+    width: calc(100% - 4rem);
+    margin: 2rem 1rem;
+  }
+}
+
+@media only screen and (max-width: 620px) {
   #signoutBTN-pc {
     display: none;
   }
@@ -538,3 +651,47 @@ body {
     display: none;
   }
 }
+
+@media only screen and (max-width: 520px) {
+  #newblog.off {
+    display: none;
+  }
+
+  #emplyblogs {
+    display: block;
+  }
+
+  #newblog:not(.off) + #emplyblogs {
+    display: none;
+  }
+
+  .FAB {
+    display: block;
+  }
+
+  #searchINP {
+    width: 0;
+    margin: 0;
+  }
+
+  #searchINP:focus {
+    width: 8rem;
+    margin: 0 0.75rem;
+  }
+
+  #searchINP:not(:placeholder-shown) {
+    width: 4rem;
+    margin: 0 0.75rem;
+  }
+
+  #searchbar:focus-within, #searchbar:has(#searchINP:not(:placeholder-shown)) {
+    margin: 0 calc(50vw - 3.5rem);
+    padding: 0 0 0 1rem;
+  } 
+
+  #searchbar {
+    margin: 0 calc(50vw - 10rem);
+    padding: 0 1rem;
+  }
+}
+
